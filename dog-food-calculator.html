@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Food Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .result p {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .dog-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dog-icon">🐕</div>
+        <h1>Dog Food Calculator</h1>
+        
+        <form id="dogForm">
+            <div class="input-group">
+                <label for="weight">Weight (lbs)</label>
+                <select id="weight" required>
+                    <option value="">Select weight</option>
+                    <option value="5">5 lbs</option>
+                    <option value="10">10 lbs</option>
+                    <option value="15">15 lbs</option>
+                    <option value="20">20 lbs</option>
+                    <option value="25">25 lbs</option>
+                    <option value="30">30 lbs</option>
+                    <option value="35">35 lbs</option>
+                    <option value="40">40 lbs</option>
+                    <option value="45">45 lbs</option>
+                    <option value="50">50 lbs</option>
+                    <option value="55">55 lbs</option>
+                    <option value="60">60 lbs</option>
+                    <option value="65">65 lbs</option>
+                    <option value="70">70 lbs</option>
+                    <option value="75">75 lbs</option>
+                    <option value="80">80 lbs</option>
+                    <option value="85">85 lbs</option>
+                    <option value="90">90 lbs</option>
+                    <option value="95">95 lbs</option>
+                    <option value="100">100 lbs</option>
+                    <option value="105">105 lbs</option>
+                    <option value="110">110 lbs</option>
+                    <option value="115">115 lbs</option>
+                    <option value="120">120 lbs</option>
+                    <option value="125">125 lbs</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="activityLevel">Activity Level</label>
+                <select id="activityLevel" required>
+                    <option value="">Select activity level</option>
+                    <option value="inactive">Inactive (minimal exercise)</option>
+                    <option value="typical">Typical (regular walks)</option>
+                    <option value="active">Active (frequent exercise)</option>
+                    <option value="v-active">Very Active/Working dog</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="calorieUnit">Calorie Unit</label>
+                <select id="calorieUnit" required>
+                    <option value="">Select unit</option>
+                    <option value="cup">Per Cup</option>
+                    <option value="ounce">Per Ounce</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="foodCalories">Food Caloric Content</label>
+                <input type="number" id="foodCalories" placeholder="Enter calories per selected unit" min="10" max="1000" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="caloriesPerKg">Calories per KG</label>
+                <input type="number" id="caloriesPerKg" placeholder="Enter calories per kg" min="500" max="6000" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="poundsPerBag">Pounds per Bag</label>
+                <input type="number" id="poundsPerBag" placeholder="Enter weight of bag in pounds" min="1" max="100" step="0.1" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="costPerBag">Cost per Bag ($)</label>
+                <input type="number" id="costPerBag" placeholder="Enter cost of bag in dollars" min="1" max="500" step="0.01" required>
+            </div>
+            
+            <button type="submit" class="calculate-btn">Calculate Food Amount</button>
+        </form>
+        
+        <div id="result" class="result">
+            <h3>Feeding Recommendations</h3>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <script>
+
+        const weightCalorieTable = {
+            5: 203, 10: 342, 15: 464, 20: 575, 25: 680, 30: 780, 35: 875, 40: 968,
+            45: 1057, 50: 1144, 55: 1229, 60: 1312, 65: 1393, 70: 1472, 75: 1551,
+            80: 1627, 85: 1703, 90: 1778, 95: 1851, 100: 1924, 105: 1996, 110: 2066,
+            115: 2137, 120: 2206, 125: 2274
+        };
+
+        const activityMultipliers = {
+            'inactive': 0.82,
+            'typical': 1.00,
+            'active': 1.14,
+            'v-active': 1.59
+        };
+
+        function getBaseCalories(weight) {
+            const weights = Object.keys(weightCalorieTable).map(Number).sort((a, b) => a - b);
+            
+            if (weight <= weights[0]) return weightCalorieTable[weights[0]];
+            if (weight >= weights[weights.length - 1]) return weightCalorieTable[weights[weights.length - 1]];
+            
+            for (let i = 0; i < weights.length - 1; i++) {
+                if (weight >= weights[i] && weight <= weights[i + 1]) {
+                    const ratio = (weight - weights[i]) / (weights[i + 1] - weights[i]);
+                    return Math.round(weightCalorieTable[weights[i]] + 
+                           ratio * (weightCalorieTable[weights[i + 1]] - weightCalorieTable[weights[i]]));
+                }
+            }
+            
+            return weightCalorieTable[weights[weights.length - 1]];
+        }
+
+        function calculateDailyCalories(weight, activityLevel) {
+            const baseCalories = getBaseCalories(weight);
+            const activityMultiplier = activityMultipliers[activityLevel];
+            
+            return Math.round(baseCalories * activityMultiplier);
+        }
+
+        function calculateFoodAmount(dailyCalories, foodCalories, calorieUnit, poundsPerBag, costPerBag) {
+            let caloriesPerCup = foodCalories;
+            
+            if (calorieUnit === 'ounce') {
+                caloriesPerCup = foodCalories * 8;
+            }
+            
+            const cupsNeeded = dailyCalories / caloriesPerCup;
+            const cupsRounded = Math.round(cupsNeeded * 4) / 4;
+            
+            const cupsPerBag = poundsPerBag * 16 / 4;
+            const daysPerBag = cupsPerBag / cupsRounded;
+            const costPerDay = costPerBag / daysPerBag;
+            
+            return {
+                cupsPerDay: cupsRounded,
+                dailyCalories: dailyCalories,
+                caloriesPerCup: caloriesPerCup,
+                daysPerBag: Math.round(daysPerBag * 10) / 10,
+                costPerDay: Math.round(costPerDay * 100) / 100
+            };
+        }
+
+
+        function getActivityLabel(activityLevel) {
+            const labels = {
+                'inactive': 'Inactive',
+                'typical': 'Typical',
+                'active': 'Active',
+                'v-active': 'Very Active/Working'
+            };
+            return labels[activityLevel];
+        }
+
+
+        document.getElementById('dogForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const weight = parseFloat(document.getElementById('weight').value);
+            const activityLevel = document.getElementById('activityLevel').value;
+            const calorieUnit = document.getElementById('calorieUnit').value;
+            const foodCalories = parseFloat(document.getElementById('foodCalories').value);
+            const caloriesPerKg = parseFloat(document.getElementById('caloriesPerKg').value);
+            const poundsPerBag = parseFloat(document.getElementById('poundsPerBag').value);
+            const costPerBag = parseFloat(document.getElementById('costPerBag').value);
+            
+            if (!weight || !activityLevel || !calorieUnit || !foodCalories || !caloriesPerKg || !poundsPerBag || !costPerBag) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const dailyCalories = calculateDailyCalories(weight, activityLevel);
+            const foodAmount = calculateFoodAmount(dailyCalories, foodCalories, calorieUnit, poundsPerBag, costPerBag);
+            
+            const resultContent = document.getElementById('resultContent');
+            resultContent.innerHTML = `
+                <p><strong>Daily Feeding Recommendations:</strong></p>
+                <p class="highlight">${foodAmount.dailyCalories} calories per day</p>
+                <p class="highlight">${foodAmount.cupsPerDay} cups per day</p>
+                <hr style="margin: 15px 0; border: 1px solid #ddd;">
+                <p><strong>Cost Analysis:</strong></p>
+                <p class="highlight">$${foodAmount.costPerDay} per day</p>
+                <p class="highlight">${foodAmount.daysPerBag} days per bag</p>
+                <hr style="margin: 15px 0; border: 1px solid #ddd;">
+                <p><strong>Feeding Schedule:</strong></p>
+                <p>• Morning: ${Math.round(foodAmount.cupsPerDay * 0.4 * 4) / 4} cups</p>
+                <p>• Evening: ${Math.round(foodAmount.cupsPerDay * 0.6 * 4) / 4} cups</p>
+                <hr style="margin: 15px 0; border: 1px solid #ddd;">
+                <p><strong>Food Details:</strong></p>
+                <p>• ${foodAmount.caloriesPerCup} calories per cup</p>
+                <p>• ${caloriesPerKg} calories per kg</p>
+                <p>• ${poundsPerBag} lbs per bag</p>
+                <p>• $${costPerBag} per bag</p>
+            `;
+            
+            document.getElementById('result').classList.add('show');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
